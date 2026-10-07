@@ -2,6 +2,8 @@
 
 **An interactive explorer for technology ecosystems, research networks and emerging companies.**
 
+**[▶ Open the live demo](https://pymak.github.io/ecosystem-atlas/)**: runs in the browser, nothing to install.
+
 Ecosystem Atlas is a neutral portfolio adaptation of an ecosystem intelligence platform I worked on during my internship. It demonstrates how fragmented information about institutions, laboratories and companies can be organized into a connected, searchable interface.
 
 This public edition is a standalone demonstration using fictional organizations and sample data. It contains no employer branding, internal records or connections to the original platform.
@@ -46,6 +48,8 @@ The goal is to make those connections easier to explore: where organizations ope
 The demo contains 15 fictional organizations across institutions, laboratories, spin-offs and companies, plus 12 news signals and 9 upcoming events.
 
 ## Run locally
+
+Use the [live demo](https://pymak.github.io/ecosystem-atlas/), or run it locally:
 
 1. Download or clone this repository.
 2. Open `index.html` in a current browser.
