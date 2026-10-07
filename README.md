@@ -76,7 +76,7 @@ No installation, build step, account or server is required. The demo is self-con
 | Application logic | Vanilla JavaScript |
 | Map | Inline SVG drawn from official Swiss boundary data (LV95 projection), simplified at build time |
 | Relationship diagrams | HTML/CSS and inline SVG |
-| Sample dataset | Embedded JavaScript objects |
+| Sample dataset | Embedded JavaScript objects (stand-in for the imported Excel workbook, see below) |
 | Local persistence | Browser `localStorage`, when available |
 | Data export | JSON download (organizations, relationships, signals, events) |
 | Calendar export | Standard iCalendar (`.ics`) file per event |
@@ -86,6 +86,24 @@ Organizations are placed at the real coordinates of their city (converted from W
 Organizations have stable identifiers. Relationships reference those identifiers and carry explicit types, allowing the interface to distinguish research affiliations, illustrative spin-offs, collaborations and supply partnerships.
 
 The public demo has no external libraries, network requests, backend or database connection.
+
+### Data source: an Excel workbook
+
+In normal use, the platform's data does not live in the code. It comes from an **Excel workbook that is imported into the platform and acts as its database**. The team maintains organizations, relationships and funding in a familiar spreadsheet, and the platform reads it to build the map, profiles, lineages and funding views.
+
+A typical workbook has one sheet per entity, linked by stable IDs:
+
+| Sheet | Example columns |
+| --- | --- |
+| Organizations | `id`, `name`, `type`, `domain`, `city`, `founded`, `focus`, `description` |
+| Relationships | `from_id`, `to_id`, `type` (affiliation, spin-off, collaboration, supply), `source`, `verified` |
+| Funding | `org_id`, `round`, `amount_chf_m`, `year`, `source` |
+| Signals | `date`, `category`, `org_ids`, `title`, `summary`, `source`, `confirmed` |
+| Events | `start`, `end`, `type`, `title`, `city`, `venue`, `org_ids` |
+
+On import, the platform validates the workbook before replacing the live data. It checks that required columns are present, IDs are unique, every relationship points to an existing organization, cities resolve to map coordinates, and values have the right types. Rows that fail are reported back so they can be fixed in the spreadsheet.
+
+In this public demo the workbook is replaced by the fictional records embedded in `index.html`, so the page runs without any upload or backend. The **Export JSON** button outputs the same structure (organizations, relationships, signals and events), mirroring what an import would load. In a production setup, changes approved in the **Agent review** queue would be written back to the workbook, or to a database that replaces it as the platform grows, so the spreadsheet stays the single source of truth.
 
 ## How AI agents could power the platform
 
@@ -138,7 +156,7 @@ All organization names, histories, relationships, financial figures, news items,
 
 Edits and review decisions are stored only in the current browser when local storage is available. Otherwise, they last for the current session. Undo history applies to the current session. To restore the starting dataset, select **About this demo → Reset demo data**.
 
-This portfolio edition demonstrates the interaction and data exploration concepts. Production authentication, backend authorization, shared persistence, workbook synchronization and multi-user collaboration are outside its scope.
+This portfolio edition demonstrates the interaction and data exploration concepts. Production authentication, backend authorization, shared persistence, Excel workbook import and synchronization, and multi-user collaboration are outside its scope.
 
 ## Map data
 
